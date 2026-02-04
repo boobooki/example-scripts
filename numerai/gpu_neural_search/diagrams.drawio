@@ -1,0 +1,959 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="26.0">
+  <diagram id="page1" name="1. 全体システム構成">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title1" value="全体システム構成図" style="text;html=1;fontSize=24;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- User PC -->
+        <mxCell id="pc_group" value="あなたの PC (RTX 5070 Ti / 16GB VRAM)" style="shape=mxgraph.gcp2.group;fillColor=#E8F5E9;strokeColor=#43A047;fontStyle=1;fontSize=14;verticalAlign=top;align=center;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="900" height="520" as="geometry" />
+        </mxCell>
+
+        <!-- Git Repo -->
+        <mxCell id="repo" value="example-scripts/&#xa;(Git リポジトリ)" style="shape=folder;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="130" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Numerai Pipeline -->
+        <mxCell id="pipeline" value="既存パイプライン&#xa;agents/code/modeling/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="260" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- GPU Neural Search -->
+        <mxCell id="gpu_search" value="GPU Neural Search&#xa;gpu_neural_search/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8BBD0;strokeColor=#C62828;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="370" width="200" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- NN Models -->
+        <mxCell id="nn_models" value="NN モデル群" style="shape=process;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="260" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Model Types -->
+        <mxCell id="mlp" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CE93D8;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="340" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="resnet" value="ResNet" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CE93D8;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="460" y="340" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="fttrans" value="FT-Trans" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CE93D8;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="340" width="60" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- GPU -->
+        <mxCell id="gpu" value="RTX 5070 Ti&#xa;CUDA 12.x&#xa;16GB VRAM&#xa;Mixed Precision (FP16)" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="250" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- PyTorch -->
+        <mxCell id="pytorch" value="PyTorch&#xa;+ CUDA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#BF360C;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="380" width="120" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Optuna -->
+        <mxCell id="optuna" value="Optuna&#xa;(TPE Sampler)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B3E5FC;strokeColor=#0277BD;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="420" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Model Factory -->
+        <mxCell id="factory" value="model_factory.py&#xa;(モデル登録)" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="380" y="170" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- External: Numerai API -->
+        <mxCell id="numerai_api" value="Numerai API&#xa;(numer.ai)" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="100" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- External: MCP Server -->
+        <mxCell id="mcp" value="Numerai MCP Server&#xa;(モデル管理/アップロード)" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="240" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- External: Dataset -->
+        <mxCell id="dataset" value="v5.2 データセット&#xa;train.parquet&#xa;(難読化済み金融データ)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;stencil=mxgraph.basic.cylinder;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;fontStyle=1;size=12;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="400" width="160" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows -->
+        <mxCell id="a1" edge="1" source="repo" target="pipeline" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" edge="1" source="repo" target="gpu_search" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" edge="1" source="pipeline" target="factory" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" edge="1" source="factory" target="nn_models" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" value="学習実行" style="edgeStyle=orthogonalEdgeStyle;" edge="1" source="nn_models" target="gpu" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" edge="1" source="gpu" target="pytorch" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" value="探索指示" edge="1" source="gpu_search" target="optuna" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a8" value="ハイパラ提案" edge="1" source="optuna" target="nn_models" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a9" value="データ取得" style="dashed=1;" edge="1" source="pipeline" target="numerai_api" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a10" value="モデル提出" style="dashed=1;" edge="1" source="pipeline" target="mcp" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a11" value="ダウンロード" style="dashed=1;" edge="1" source="numerai_api" target="dataset" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend_bg" value="" style="rounded=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;" vertex="1" parent="1">
+          <mxGeometry x="80" y="620" width="500" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" value="凡例" style="text;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="625" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" value="" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="90" y="650" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1t" value="既存パイプライン" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="648" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" value="" style="rounded=1;fillColor=#F8BBD0;strokeColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="230" y="650" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2t" value="新規追加（今回）" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="255" y="648" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" value="" style="rounded=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="370" y="650" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3t" value="NNモデル（新規）" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="395" y="648" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" value="" style="shape=cloud;fillColor=#FFE0B2;strokeColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="90" y="675" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4t" value="外部サービス" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="125" y="678" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5" value="" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="230" y="678" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5t" value="GPU ハードウェア" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="255" y="676" width="100" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="page2" name="2. データフロー">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title2" value="データフロー図" style="text;html=1;fontSize=24;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Numerai Cloud -->
+        <mxCell id="cloud" value="Numerai&#xa;サーバー" style="shape=cloud;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="140" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Download -->
+        <mxCell id="dl_arrow" value="NumerAPI&#xa;ダウンロード" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;" edge="1" source="cloud" target="raw_data" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Raw Data -->
+        <mxCell id="raw_data" value="v5.2/train.parquet&#xa;&#xa;・~2500 特徴量&#xa;・~1200 era (週次)&#xa;・複数ターゲット&#xa;・[0, 1] 正規化済み" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;size=12;" vertex="1" parent="1">
+          <mxGeometry x="250" y="80" width="180" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Downsample -->
+        <mxCell id="ds_arrow" value="ダウンサンプル&#xa;(毎4 era)" style="fontSize=10;" edge="1" source="raw_data" target="ds_data" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ds_data" value="downsampled_full.parquet&#xa;&#xa;・~300 era&#xa;・高速イテレーション用" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;size=12;" vertex="1" parent="1">
+          <mxGeometry x="510" y="80" width="200" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Benchmark Models -->
+        <mxCell id="bench" value="benchmark_models.parquet&#xa;&#xa;v52_lgbm_ender20 等&#xa;(公式ベースライン予測)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#283593;fontSize=11;size=12;" vertex="1" parent="1">
+          <mxGeometry x="510" y="230" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Feature Selection -->
+        <mxCell id="feat_sel" value="特徴量選択&#xa;&#xa;small: ~42 cols&#xa;medium: ~700 cols&#xa;all: ~2500 cols" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="790" y="80" width="160" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fs_arrow" edge="1" source="ds_data" target="feat_sel" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- X Groups Assembly -->
+        <mxCell id="xgroups" value="X マトリクス組立&#xa;(x_groups)&#xa;&#xa;features + era + benchmark" style="shape=process;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="230" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xg1" edge="1" source="feat_sel" target="xgroups" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xg2" edge="1" source="bench" target="xgroups" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CV Split -->
+        <mxCell id="cv" value="Era-based CV Split&#xa;(5-fold, embargo=13)" style="shape=process;whiteSpace=wrap;html=1;fillColor=#F8BBD0;strokeColor=#C62828;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="360" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cv_arr" edge="1" source="xgroups" target="cv" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Train Fold -->
+        <mxCell id="train_fold" value="Train Fold&#xa;(各fold)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="620" y="470" width="120" height="50" as="geometry" />
+        </mxCell>
+        <!-- Val Fold -->
+        <mxCell id="val_fold" value="Val Fold&#xa;(OOF評価)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="980" y="470" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cf1" edge="1" source="cv" target="train_fold" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cf2" edge="1" source="cv" target="val_fold" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- NN Internal Split -->
+        <mxCell id="nn_split" value="NN 内部分割&#xa;(Early Stopping用)&#xa;&#xa;Era-based:&#xa;末尾 10% era = val" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="580" y="560" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ns1" edge="1" source="train_fold" target="nn_split" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- GPU Training -->
+        <mxCell id="gpu_train" value="GPU 学習&#xa;(PyTorch + CUDA)&#xa;&#xa;Mixed Precision&#xa;Batch=4096" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="700" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="gt1" edge="1" source="nn_split" target="gpu_train" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Predictions -->
+        <mxCell id="preds" value="OOF 予測&#xa;predictions.parquet" style="shape=document;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="700" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pr1" value="predict" edge="1" source="gpu_train" target="preds" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Metrics -->
+        <mxCell id="metrics" value="メトリクス計算&#xa;&#xa;・per-era corr&#xa;・BMC (ベンチマーク貢献)&#xa;・Sharpe ratio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="690" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" edge="1" source="preds" target="metrics" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Upload -->
+        <mxCell id="upload" value="pkl アップロード&#xa;(MCP Server)" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="560" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" value="成績が良ければ" style="dashed=1;fontSize=10;" edge="1" source="metrics" target="upload" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="page3" name="3. パイプライン内部">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title3" value="パイプライン内部処理フロー (pipeline.py)" style="text;html=1;fontSize=24;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Step 1: Load Config -->
+        <mxCell id="s1" value="1. Config 読込&#xa;load_config(path)&#xa;&#xa;.py or .json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="80" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Step 2: Fetch Data -->
+        <mxCell id="s2" value="2. データ取得&#xa;load_full_data()&#xa;&#xa;NumerAPI → parquet" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="180" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s12" edge="1" source="s1" target="s2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 3: Attach Benchmarks -->
+        <mxCell id="s3" value="3. ベンチマーク付与&#xa;attach_benchmark_models()&#xa;&#xa;※ normalize_x_groups が&#xa;強制追加するため必須" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#C62828;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="280" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s23" edge="1" source="s2" target="s3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 4: Build X cols -->
+        <mxCell id="s4" value="4. X カラム構築&#xa;build_x_cols()&#xa;&#xa;x_groups → 実カラム名リスト" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="400" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s34" edge="1" source="s3" target="s4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 5: Build DataLoader -->
+        <mxCell id="s5" value="5. DataLoader 構築&#xa;build_model_data_loader()&#xa;&#xa;ModelDataBatch(X, y, era, id)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="80" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s45" edge="1" source="s4" target="s5" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 6: CV -->
+        <mxCell id="s6" value="6. Cross-Validation&#xa;build_oof_predictions()&#xa;&#xa;era_cv_splits() で fold 分割&#xa;→ 各 fold で fit → predict" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="180" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s56" edge="1" source="s5" target="s6" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 6a: build_model -->
+        <mxCell id="s6a" value="6a. build_model()&#xa;&#xa;model_factory.py&#xa;→ NumeraiMLP etc." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="700" y="180" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s66a" value="各fold" edge="1" source="s6" target="s6a" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 6b: model.fit -->
+        <mxCell id="s6b" value="6b. model.fit(X, y)&#xa;&#xa;nn_base.py:&#xa;→ era抽出&#xa;→ _to_numpy (feature_cols filter)&#xa;→ _split_train_val (era-based)&#xa;→ PyTorch train loop&#xa;→ early stopping" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="700" y="280" width="220" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="s6ab" edge="1" source="s6a" target="s6b" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 6c: model.predict -->
+        <mxCell id="s6c" value="6c. model.predict(X)&#xa;&#xa;→ _to_numpy&#xa;→ DataLoader&#xa;→ GPU inference&#xa;→ np.ndarray" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="700" y="440" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s6bc" edge="1" source="s6b" target="s6c" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 7: Save Predictions -->
+        <mxCell id="s7" value="7. OOF 予測保存&#xa;predictions.parquet&#xa;&#xa;[id, era, target,&#xa; prediction, cv_fold]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="310" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="s67" edge="1" source="s6" target="s7" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 8: Metrics -->
+        <mxCell id="s8" value="8. メトリクス計算&#xa;per_era_corr()&#xa;per_era_bmc()&#xa;score_summary()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="430" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="s78" edge="1" source="s7" target="s8" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Step 9: Save Results -->
+        <mxCell id="s9" value="9. 結果保存&#xa;results.json&#xa;&#xa;model, data, metrics,&#xa;cv, training 情報" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="400" y="540" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="s89" edge="1" source="s8" target="s9" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Highlight box -->
+        <mxCell id="highlight" value="紫: NN モデル固有の処理&#xa;(今回の実装部分)" style="text;fontSize=11;fontColor=#6A1B9A;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="700" y="560" width="200" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="page4" name="4. NNアーキテクチャ比較">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title4" value="ニューラルネットワーク アーキテクチャ比較" style="text;html=1;fontSize=24;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========== MLP ========== -->
+        <mxCell id="mlp_group" value="NumeraiMLP (nn_mlp.py)" style="shape=mxgraph.gcp2.group;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontStyle=1;fontSize=13;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="380" height="780" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mlp_in" value="Input (n_features)&#xa;例: 700 次元" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="130" y="100" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp_idrop" value="Input Dropout" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="160" y="160" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp_a1" edge="1" source="mlp_in" target="mlp_idrop" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="mlp_b1" value="Linear(700 → 512)&#xa;+ BatchNorm + SiLU + Dropout" style="rounded=1;fillColor=#CE93D8;strokeColor=#6A1B9A;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="90" y="210" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp_a2" edge="1" source="mlp_idrop" target="mlp_b1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="mlp_skip1" value="Skip接続&#xa;(Linear投影)" style="text;fontSize=9;fontStyle=2;fontColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="55" y="230" width="80" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mlp_b2" value="Linear(512 → 256)&#xa;+ BatchNorm + SiLU + Dropout" style="rounded=1;fillColor=#CE93D8;strokeColor=#6A1B9A;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="90" y="280" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp_a3" edge="1" source="mlp_b1" target="mlp_b2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="mlp_b3" value="Linear(256 → 128)&#xa;+ BatchNorm + SiLU + Dropout" style="rounded=1;fillColor=#CE93D8;strokeColor=#6A1B9A;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="90" y="350" width="260" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp_a4" edge="1" source="mlp_b2" target="mlp_b3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="mlp_head" value="Linear(128 → 1)" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="420" width="140" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp_a5" edge="1" source="mlp_b3" target="mlp_head" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="mlp_out" value="Output (scalar)" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="155" y="480" width="130" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="mlp_a6" edge="1" source="mlp_head" target="mlp_out" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="mlp_props" value="特徴:&#xa;・可変深度 (2-6層)&#xa;・Skip接続 (任意)&#xa;・BatchNorm (任意)&#xa;・SiLU/GELU/ReLU 選択&#xa;・VRAM: 軽量 (~2-4GB)&#xa;・学習速度: 最速" style="text;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="300" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- ========== ResNet ========== -->
+        <mxCell id="resnet_group" value="NumeraiResNet (nn_resnet.py)" style="shape=mxgraph.gcp2.group;fillColor=#E3F2FD;strokeColor=#1565C0;fontStyle=1;fontSize=13;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="460" y="60" width="400" height="780" as="geometry" />
+        </mxCell>
+
+        <mxCell id="res_in" value="Input (n_features)&#xa;例: 700 次元" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="100" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="res_proj" value="Linear(700 → 256)&#xa;+ Input Dropout" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="550" y="160" width="200" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="res_a1" edge="1" source="res_in" target="res_proj" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Residual Block 1 -->
+        <mxCell id="resb1_bg" value="" style="rounded=1;fillColor=#E3F2FD;strokeColor=#1565C0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="220" width="340" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="resb1_title" value="Residual Block ×N (2-8)" style="text;fontSize=10;fontStyle=3;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="225" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="resb1_bn1" value="BatchNorm → Activation" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="520" y="250" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="resb1_lin1" value="Linear(256 → 256)" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="520" y="285" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="resb1_drop" value="Dropout" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="720" y="265" width="80" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="res_a2" edge="1" source="res_proj" target="resb1_bn1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="res_skip_label" value="x + F(x)&#xa;(残差接続)" style="text;fontSize=10;fontStyle=2;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="720" y="295" width="80" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="res_head" value="BatchNorm → Linear(256 → 1)" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="535" y="360" width="230" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="res_out" value="Output (scalar)" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="580" y="420" width="130" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="res_a4" edge="1" source="res_head" target="res_out" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="res_props" value="特徴:&#xa;・Pre-activation 残差ブロック&#xa;・勾配消失問題に強い&#xa;・固定幅 (128/256/512)&#xa;・深くしても安定 (2-8 blocks)&#xa;・VRAM: 中程度 (~2-5GB)&#xa;・学習速度: 中" style="text;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="480" y="540" width="300" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- ========== FT-Transformer ========== -->
+        <mxCell id="ft_group" value="NumeraiFTTransformer (nn_ft_transformer.py)" style="shape=mxgraph.gcp2.group;fillColor=#FFF3E0;strokeColor=#E65100;fontStyle=1;fontSize=13;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="900" y="60" width="460" height="780" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ft_in" value="Input (n_features)&#xa;例: 700 スカラー値" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="100" width="180" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ft_tok" value="Feature Tokenizer&#xa;&#xa;各特徴量 → d_model 次元ベクトル&#xa;x[i] * W[i] + b[i]&#xa;&#xa;(700, ) → (700, 128)" style="rounded=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="990" y="160" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ft_a1" edge="1" source="ft_in" target="ft_tok" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="ft_cls" value="[CLS] トークン追加&#xa;(700, 128) → (701, 128)" style="rounded=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="260" width="220" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ft_a2" edge="1" source="ft_tok" target="ft_cls" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Transformer Block -->
+        <mxCell id="ftb_bg" value="" style="rounded=1;fillColor=#FFF3E0;strokeColor=#E65100;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="320" width="400" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ftb_title" value="Transformer Encoder ×N (1-4 layers)" style="text;fontSize=10;fontStyle=3;fontColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="940" y="325" width="250" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ftb_ln1" value="LayerNorm (Pre-Norm)" style="rounded=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="960" y="350" width="160" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ftb_attn" value="Multi-Head Self-Attention&#xa;(8 heads, d=128)" style="rounded=1;fillColor=#FFCC80;strokeColor=#E65100;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="380" width="200" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ftb_ff" value="Feed-Forward&#xa;Linear(128→512) → GELU → Linear(512→128)" style="rounded=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="960" y="425" width="340" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ftb_drop" value="Dropout" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="370" width="80" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ft_a3" edge="1" source="ft_cls" target="ftb_ln1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="ft_clsout" value="[CLS] 出力を抽出&#xa;(701, 128) → (128, )" style="rounded=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="510" width="220" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ft_head" value="LayerNorm → Linear(128 → 1)" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="570" width="220" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ft_a5" edge="1" source="ft_clsout" target="ft_head" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="ft_out" value="Output (scalar)" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1065" y="630" width="130" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ft_a6" edge="1" source="ft_head" target="ft_out" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="ft_props" value="特徴:&#xa;・特徴量間の相互作用を学習 (Attention)&#xa;・最も表現力が高い&#xa;・特徴量数に対して O(n^2) メモリ&#xa;・feature_set=all で VRAM 限界注意&#xa;・VRAM: 大 (~4-16GB)&#xa;・学習速度: 最遅" style="text;fontSize=11;align=left;" vertex="1" parent="1">
+          <mxGeometry x="920" y="690" width="400" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="page5" name="5. Optuna探索フロー">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title5" value="Optuna アーキテクチャ探索フロー" style="text;html=1;fontSize=24;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="350" y="10" width="500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Start -->
+        <mxCell id="start" value="開始&#xa;python -m gpu_neural_search" style="shape=ellipse;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="70" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Load Data -->
+        <mxCell id="ld" value="Numerai データ読込&#xa;NumerAPI → train.parquet&#xa;↓ ダウンサンプル (4 era毎)&#xa;↓ 特徴量選択 (medium)" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="150" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="a_start" edge="1" source="start" target="ld" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Split -->
+        <mxCell id="split" value="Era-based Train/Val 分割&#xa;80% train / 20% val / embargo=13" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a_ld" edge="1" source="ld" target="split" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Optuna Study -->
+        <mxCell id="study" value="Optuna Study 作成&#xa;TPE Sampler (multivariate=True)" style="rounded=1;fillColor=#B3E5FC;strokeColor=#0277BD;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a_split" edge="1" source="split" target="study" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Trial Loop -->
+        <mxCell id="loop_bg" value="" style="rounded=1;fillColor=#F5F5F5;strokeColor=#616161;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="60" width="660" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="loop_title" value="Trial ループ (N=50 trials)" style="text;fontSize=14;fontStyle=1;fontColor=#616161;" vertex="1" parent="1">
+          <mxGeometry x="390" y="65" width="300" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="a_study" value="trial開始" edge="1" source="study" target="arch_select" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Architecture Selection -->
+        <mxCell id="arch_select" value="アーキテクチャ選択&#xa;suggest_categorical(&#xa;  'architecture',&#xa;  [MLP, ResNet, FTTransformer]&#xa;)" style="shape=rhombus;whiteSpace=wrap;html=1;fillColor=#B3E5FC;strokeColor=#0277BD;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="420" y="100" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- MLP Space -->
+        <mxCell id="mlp_space" value="MLP 探索空間&#xa;&#xa;layers: 2-6&#xa;first_dim: 128/256/512/1024&#xa;shrink: constant/halving/gradual&#xa;dropout: 0.0-0.5&#xa;activation: silu/gelu/relu&#xa;batchnorm: T/F&#xa;skip: T/F" style="rounded=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="400" y="230" width="180" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- ResNet Space -->
+        <mxCell id="resnet_space" value="ResNet 探索空間&#xa;&#xa;hidden_dim: 128/256/512&#xa;n_blocks: 2-8&#xa;dropout: 0.0-0.5&#xa;activation: silu/gelu/relu&#xa;batchnorm: T/F" style="rounded=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="600" y="230" width="180" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- FT-Trans Space -->
+        <mxCell id="ft_space" value="FT-Trans 探索空間&#xa;&#xa;d_model: 64/96/128/192&#xa;n_heads: 4/8&#xa;n_layers: 1-4&#xa;d_ff: 256/512/768&#xa;dropout: 0.0-0.4&#xa;attn_dropout: 0.0-0.3" style="rounded=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="800" y="230" width="190" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="as1" value="MLP" edge="1" source="arch_select" target="mlp_space" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="as2" value="ResNet" edge="1" source="arch_select" target="resnet_space" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="as3" value="FT-Trans" edge="1" source="arch_select" target="ft_space" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Common HP -->
+        <mxCell id="common_hp" value="共通ハイパラ探索&#xa;&#xa;lr: 1e-4 ~ 1e-2 (log)&#xa;batch_size: 1024/2048/4096/8192&#xa;weight_decay: 1e-6 ~ 1e-3 (log)&#xa;epochs: 50-150 (quick: 20-30)" style="rounded=1;fillColor=#E8EAF6;strokeColor=#283593;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="400" width="250" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Train -->
+        <mxCell id="train" value="GPU 学習&#xa;model.fit(train_X, train_y)" style="shape=hexagon;perimeter=hexagonPerimeter2;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="530" width="250" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="a_common" edge="1" source="common_hp" target="train" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- OOM Check -->
+        <mxCell id="oom" value="OOM?" style="shape=rhombus;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="790" y="520" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a_train_oom" edge="1" source="train" target="oom" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="oom_prune" value="Prune&#xa;(スキップ)" style="text;fontSize=9;fontColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="880" y="530" width="60" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Evaluate -->
+        <mxCell id="eval" value="検証&#xa;per-era correlation&#xa;on val set" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="610" width="250" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="a_train_eval" value="No" edge="1" source="oom" target="eval" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="830" y="635" /></Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Back to Optuna -->
+        <mxCell id="back_optuna" value="mean_corr → Optuna&#xa;(次のtrial提案に反映)" style="edgeStyle=orthogonalEdgeStyle;fontSize=10;fontStyle=2;" edge="1" source="eval" target="arch_select" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="960" y="635" /><mxPoint x="960" y="150" /><mxPoint x="660" y="150" /></Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Results -->
+        <mxCell id="results_box" value="" style="rounded=1;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="60" y="680" width="300" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="results_title" value="出力" style="text;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="685" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="results_items" value="results/&#xa;├── best_config.json        (ベストモデル設定)&#xa;├── best_pipeline_config.py (パイプライン用)&#xa;└── all_trials.json          (全trial結果)&#xa;&#xa;→ パイプラインでフルデータ再学習可能" style="text;fontSize=11;align=left;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="70" y="710" width="280" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="page6" name="6. GPU メモリと学習ループ">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title6" value="RTX 5070 Ti: GPU メモリ管理と学習ループ" style="text;html=1;fontSize=24;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="300" y="10" width="600" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- GPU Memory Layout -->
+        <mxCell id="vram_bg" value="" style="rounded=1;fillColor=#E8F5E9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="350" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="vram_title" value="RTX 5070 Ti VRAM (16 GB)" style="text;fontSize=14;fontStyle=1;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="60" y="65" width="300" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Model Weights -->
+        <mxCell id="vram_model" value="モデル重み (FP16)&#xa;MLP: ~0.5 GB&#xa;ResNet: ~0.5 GB&#xa;FT-Trans: ~1-3 GB" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="310" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Optimizer State -->
+        <mxCell id="vram_optim" value="AdamW オプティマイザ状態&#xa;(momentum + variance = 2x weights)&#xa;~1-6 GB" style="rounded=1;fillColor=#A5D6A7;strokeColor=#2E7D32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="310" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Activations -->
+        <mxCell id="vram_act" value="アクティベーション (中間値)&#xa;バッチサイズに比例&#xa;batch=4096: ~1-4 GB&#xa;batch=8192: ~2-8 GB" style="rounded=1;fillColor=#81C784;strokeColor=#2E7D32;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="250" width="310" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Gradients -->
+        <mxCell id="vram_grad" value="勾配 (backprop 時)&#xa;≈ weights と同サイズ&#xa;~0.5-3 GB" style="rounded=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontSize=11;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="60" y="330" width="310" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Batch Data -->
+        <mxCell id="vram_batch" value="バッチデータ (GPU上)&#xa;batch_size × n_features × 4 bytes&#xa;4096 × 700 × 4 ≈ 11 MB/batch" style="rounded=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontSize=11;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="60" y="395" width="310" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Free -->
+        <mxCell id="vram_free" value="空き&#xa;(OOM 時は Optuna が自動スキップ)" style="rounded=1;fillColor=#E0E0E0;strokeColor=#9E9E9E;fontSize=11;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="460" width="310" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- VRAM Table -->
+        <mxCell id="vram_table_bg" value="" style="rounded=1;fillColor=#FFF9C4;strokeColor=#F57F17;" vertex="1" parent="1">
+          <mxGeometry x="40" y="580" width="350" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="vram_table" value="モデル別 VRAM 目安 (medium features)&#xa;&#xa;MLP          batch=4096   ~2-4 GB&#xa;MLP          batch=8192   ~3-6 GB&#xa;ResNet       batch=4096   ~2-5 GB&#xa;FT-Trans     batch=2048   ~4-8 GB&#xa;FT-Trans     batch=4096   ~8-14 GB" style="text;fontSize=11;fontFamily=Courier New;align=left;" vertex="1" parent="1">
+          <mxGeometry x="55" y="590" width="330" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Training Loop -->
+        <mxCell id="loop_bg" value="" style="rounded=1;fillColor=#E3F2FD;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="60" width="520" height="660" as="geometry" />
+        </mxCell>
+        <mxCell id="loop_title" value="PyTorch 学習ループ (nn_base.py)" style="text;fontSize=14;fontStyle=1;fontColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="460" y="65" width="400" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l_era" value="1. Era-based split&#xa;末尾10% era → val" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="100" width="200" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l_dl" value="2. DataLoader 作成&#xa;pin_memory=True&#xa;num_workers=4" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="155" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="la1" edge="1" source="l_era" target="l_dl" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="l_build" value="3. ネットワーク構築&#xa;_build_network(n_features)&#xa;→ .to(device=&quot;cuda&quot;)" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="220" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="la2" edge="1" source="l_dl" target="l_build" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Epoch Loop -->
+        <mxCell id="epoch_bg" value="" style="rounded=1;fillColor=#E8EAF6;strokeColor=#283593;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="290" width="480" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="epoch_title" value="Epoch ループ (max 150)" style="text;fontSize=11;fontStyle=1;fontColor=#283593;" vertex="1" parent="1">
+          <mxGeometry x="470" y="295" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l_fwd" value="Forward pass&#xa;torch.amp.autocast(&quot;cuda&quot;)&#xa;→ FP16 自動変換" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="325" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l_loss" value="MSE Loss" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="390" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="la3" edge="1" source="l_fwd" target="l_loss" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="l_bwd" value="Backward pass&#xa;scaler.scale(loss).backward()&#xa;→ FP16 勾配計算" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="435" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="la4" edge="1" source="l_loss" target="l_bwd" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="l_clip" value="Gradient Clip (max=1.0)&#xa;+ AdamW step&#xa;+ GradScaler update" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="500" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="la5" edge="1" source="l_bwd" target="l_clip" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="l_sched" value="CosineAnnealing&#xa;lr scheduler" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="565" width="140" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="la6" edge="1" source="l_clip" target="l_sched" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Val + Early Stop -->
+        <mxCell id="l_val" value="Validation&#xa;(torch.no_grad)&#xa;val_loss 計算" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="325" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l_es" value="Early Stopping&#xa;&#xa;patience回連続で&#xa;val_loss改善なし&#xa;→ ループ終了" style="shape=rhombus;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="410" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="la_val" edge="1" source="l_val" target="l_es" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="l_best" value="best_state 保存&#xa;(CPU にコピー)" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="540" width="140" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="la_es" value="改善あり" edge="1" source="l_es" target="l_best" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Restore -->
+        <mxCell id="l_restore" value="4. Best state 復元&#xa;load_state_dict(best_state)&#xa;→ .to(device)" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="580" y="640" width="220" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Mixed Precision callout -->
+        <mxCell id="mp_note" value="Mixed Precision の効果:&#xa;&#xa;・FP32 → FP16 で VRAM 約半減&#xa;・Tensor Core 活用で 2-3x 速度向上&#xa;・GradScaler で数値安定性確保&#xa;・RTX 5070 Ti の Tensor Core に最適" style="rounded=1;fillColor=#FFF3E0;strokeColor=#E65100;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="300" width="280" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="page7" name="7. クロスバリデーション">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title7" value="Era-based Cross-Validation + NN 内部 Early Stopping" style="text;html=1;fontSize=22;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="250" y="10" width="700" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Timeline -->
+        <mxCell id="timeline_label" value="Era (時間軸) →" style="text;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="timeline" value="" style="shape=line;strokeWidth=3;strokeColor=#616161;" vertex="1" parent="1">
+          <mxGeometry x="40" y="85" width="1200" height="1" as="geometry" />
+        </mxCell>
+
+        <!-- Era labels -->
+        <mxCell id="era1" value="Era 1" style="text;fontSize=9;fontColor=#616161;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="40" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="era300" value="Era 300+" style="text;fontSize=9;fontColor=#616161;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="90" width="60" height="15" as="geometry" />
+        </mxCell>
+
+        <!-- Fold 1 (skip - too early, no train data) -->
+        <!-- Fold 2 -->
+        <mxCell id="f2_label" value="CV Fold 2" style="text;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f2_train" value="Train" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="145" width="200" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="f2_embargo" value="Embargo (13 eras)" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="240" y="145" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="f2_val" value="Val (OOF)" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="145" width="200" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Fold 3 -->
+        <mxCell id="f3_label" value="CV Fold 3" style="text;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="185" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f3_train" value="Train" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="210" width="380" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="f3_embargo" value="Embargo" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="420" y="210" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="f3_val" value="Val (OOF)" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="520" y="210" width="200" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Fold 5 -->
+        <mxCell id="f5_label" value="CV Fold 5" style="text;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="250" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="f5_train" value="Train" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="275" width="820" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="f5_embargo" value="Embargo" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="860" y="275" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="f5_val" value="Val (OOF)" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="960" y="275" width="200" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- NN Internal Split Detail -->
+        <mxCell id="nn_detail_bg" value="" style="rounded=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="340" width="1200" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="nn_detail_title" value="NN 内部処理 (各 CV fold の Train 部分の中)" style="text;fontSize=13;fontStyle=1;fontColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="50" y="345" width="400" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="nn_desc" value="Fold 5 の Train 部分 (820 eras 分) を例にすると:" style="text;fontSize=11;fontColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="50" y="375" width="400" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- NN Internal Timeline -->
+        <mxCell id="nn_train_eras" value="NN 学習用 (90% = ~738 eras)" style="rounded=1;fillColor=#CE93D8;strokeColor=#6A1B9A;fontSize=11;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="60" y="410" width="740" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="nn_val_eras" value="NN Early Stop 用 (10% = ~82 eras)" style="rounded=1;fillColor=#AB47BC;strokeColor=#6A1B9A;fontSize=10;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="810" y="410" width="250" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="nn_note1" value="↑ era の末尾を val に使用 (時系列の順序を保持)" style="text;fontSize=10;fontStyle=2;fontColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="700" y="450" width="350" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Epoch visualization -->
+        <mxCell id="epoch_vis_label" value="学習エポック:" style="text;fontSize=11;fontStyle=1;fontColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="60" y="480" width="100" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep1" value="Epoch 1" style="rounded=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="170" y="480" width="60" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ep2" value="Epoch 2" style="rounded=1;fillColor=#E1BEE7;strokeColor=#6A1B9A;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="240" y="480" width="60" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ep3" value="..." style="text;fontSize=11;fontColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="310" y="480" width="30" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_best" value="Epoch 47&#xa;(best val_loss)" style="rounded=1;fillColor=#4CAF50;strokeColor=#2E7D32;fontSize=9;fontColor=#FFFFFF;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="475" width="100" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="ep4" value="..." style="text;fontSize=11;fontColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="460" y="480" width="30" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_stop" value="Epoch 57&#xa;(patience=10 → STOP)" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="475" width="140" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep_restore" value="→ Epoch 47 の重みを復元して predict に使用" style="text;fontSize=10;fontStyle=2;fontColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="660" y="485" width="300" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Why 2-layer split -->
+        <mxCell id="why_bg" value="" style="rounded=1;fillColor=#FFF3E0;strokeColor=#E65100;" vertex="1" parent="1">
+          <mxGeometry x="60" y="530" width="1160" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="why_text" value="なぜ2段階の分割が必要？　CV fold の Val はモデル性能の公平な評価 (OOF) に使う。NN 内部の Val は過学習を防ぐ Early Stopping に使う。目的が異なるため、両方必要。" style="text;fontSize=11;fontColor=#E65100;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="540" width="1140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="leg_bg" value="" style="rounded=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;" vertex="1" parent="1">
+          <mxGeometry x="40" y="630" width="800" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" value="" style="rounded=1;fillColor=#C8E6C9;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="55" y="645" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="l1t" value="CV Train" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="643" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" value="" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;" vertex="1" parent="1">
+          <mxGeometry x="150" y="645" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="l2t" value="Embargo" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="175" y="643" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" value="" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="245" y="645" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="l3t" value="CV Val (OOF)" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="270" y="643" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l4" value="" style="rounded=1;fillColor=#CE93D8;strokeColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="370" y="645" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="l4t" value="NN Train" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="395" y="643" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l5" value="" style="rounded=1;fillColor=#AB47BC;strokeColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="465" y="645" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="l5t" value="NN Early Stop Val" style="text;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="490" y="643" width="120" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
