@@ -1,0 +1,46 @@
+# ResNet baseline config for target_ender prediction
+# Optimized for RTX 5070 Ti (16GB VRAM)
+
+CONFIG = {
+    'data': {
+        'data_version': 'v5.2',
+        'embargo_eras': 13,
+        'era_col': 'era',
+        'feature_set': 'medium',
+        'target_col': 'target_ender_v4_20',
+        'full_data_path': 'v5.2/downsampled_full.parquet',
+    },
+    'model': {
+        'type': 'NumeraiResNet',
+        'x_groups': ['features'],
+        'params': {
+            'hidden_dim': 256,
+            'n_blocks': 4,
+            'dropout': 0.1,
+            'activation': 'silu',
+            'use_batchnorm': True,
+            'input_dropout': 0.05,
+            'learning_rate': 0.001,
+            'batch_size': 4096,
+            'epochs': 100,
+            'patience': 10,
+            'weight_decay': 1e-5,
+            'mixed_precision': True,
+            'device': 'auto',
+        },
+    },
+    'output': {
+        'output_dir': 'baselines',
+        'results_name': 'resnet_ender_baseline',
+    },
+    'preprocessing': {'missing_value': 0.5, 'nan_missing_all_twos': False},
+    'training': {
+        'cv': {
+            'embargo': 13,
+            'enabled': True,
+            'min_train_size': 0,
+            'mode': 'expanding',
+            'n_splits': 5,
+        },
+    },
+}
