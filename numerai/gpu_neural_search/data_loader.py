@@ -5,6 +5,7 @@ Handles downloading and caching Numerai tournament data.
 
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 
@@ -15,7 +16,7 @@ import pandas as pd
 def load_numerai_data(
     data_version: str = "v5.2",
     feature_set: str = "medium",
-    target_col: str = "target_ender_v4_20",
+    target_col: str = "target_ender_20",
     downsample: int = 4,
 ) -> tuple[pd.DataFrame, list[str], str]:
     """Load Numerai tournament data.
@@ -43,14 +44,19 @@ def load_numerai_data(
         print(f"Downloading {data_version} training data...")
         napi.download_dataset(f"{data_version}/train.parquet", str(train_path))
 
-    # Load features info
-    feature_metadata = napi.get_feature_metadata(data_version=data_version)
-    if feature_set == "small":
-        features = feature_metadata["feature_sets"]["small"]
-    elif feature_set == "medium":
-        features = feature_metadata["feature_sets"]["medium"]
+    # Load features info from features.json
+    features_path = data_dir / "features.json"
+    if not features_path.exists():
+        print(f"Downloading {data_version} features.json...")
+        napi.download_dataset(f"{data_version}/features.json", str(features_path))
+
+    with open(features_path) as f:
+        feature_metadata = json.load(f)
+
+    if feature_set in feature_metadata["feature_sets"]:
+        features = feature_metadata["feature_sets"][feature_set]
     else:
-        features = feature_metadata["feature_sets"]["all"]
+        features = feature_metadata["feature_sets"]["medium"]
 
     # Load data
     cols_to_load = ["era", target_col] + features

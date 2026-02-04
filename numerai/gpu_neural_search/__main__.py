@@ -6,7 +6,7 @@ Usage:
 
 Options:
     --n-trials        Number of Optuna trials (default: 50)
-    --target          Target column (default: target_ender_v4_20)
+    --target          Target column (default: target_ender_20)
     --feature-set     Feature set: small, medium, all (default: medium)
     --data-version    Dataset version (default: v5.2)
     --output-dir      Output directory (default: gpu_neural_search/results)
@@ -28,7 +28,7 @@ def main():
         description="GPU Neural Network Architecture Search for Numerai"
     )
     parser.add_argument("--n-trials", type=int, default=50, help="Number of Optuna search trials")
-    parser.add_argument("--target", type=str, default="target_ender_v4_20", help="Target column name")
+    parser.add_argument("--target", type=str, default="target_ender_20", help="Target column name")
     parser.add_argument("--feature-set", type=str, default="medium", choices=["small", "medium", "all"], help="Feature set size")
     parser.add_argument("--data-version", type=str, default="v5.2", help="Numerai data version")
     parser.add_argument("--output-dir", type=str, default="gpu_neural_search/results", help="Output directory")

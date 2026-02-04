@@ -196,7 +196,7 @@ def _create_objective(
 
 def run_search(
     n_trials: int = 50,
-    target_col: str = "target_ender_v4_20",
+    target_col: str = "target_ender_20",
     feature_set: str = "medium",
     data_version: str = "v5.2",
     output_dir: Path = Path("gpu_neural_search/results"),
@@ -215,7 +215,7 @@ def run_search(
     # GPU info
     if torch.cuda.is_available():
         gpu_name = torch.cuda.get_device_name(0)
-        gpu_mem = torch.cuda.get_device_properties(0).total_mem / (1024 ** 3)
+        gpu_mem = torch.cuda.get_device_properties(0).total_memory / (1024 ** 3)
         print(f"  GPU: {gpu_name} ({gpu_mem:.1f} GB)")
     else:
         print("  WARNING: No GPU detected. Running on CPU (slow).")
