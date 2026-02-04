@@ -7,12 +7,13 @@ CONFIG = {
         'embargo_eras': 13,
         'era_col': 'era',
         'feature_set': 'medium',
-        'target_col': 'target_ender_v4_20',
+        'target_col': 'target',
         'full_data_path': 'v5.2/downsampled_full.parquet',
+        'benchmark_data_path': 'v5.2/downsampled_full_benchmark_models.parquet',
     },
     'model': {
         'type': 'NumeraiMLP',
-        'x_groups': ['features'],
+        'x_groups': ['features', 'era', 'benchmark_models'],
         'params': {
             'hidden_dims': [512, 256, 128],
             'dropout': 0.15,

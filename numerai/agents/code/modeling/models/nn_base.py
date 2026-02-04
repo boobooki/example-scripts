@@ -61,15 +61,16 @@ class NumeraiNNBase:
     # ------------------------------------------------------------------
 
     def fit(self, X: pd.DataFrame, y: pd.Series, **kwargs) -> "NumeraiNNBase":
+        # Extract era info before feature filtering (for era-based val split)
+        era_series = None
+        if hasattr(X, "columns") and "era" in X.columns:
+            era_series = X["era"]
+
         X_np, y_np = self._prepare_data(X, y)
         self._n_features = X_np.shape[1]
 
-        # Train / validation split (simple random)
-        rng = np.random.RandomState(self._seed)
-        n = len(X_np)
-        n_val = max(1, int(n * self._val_fraction))
-        idx = rng.permutation(n)
-        val_idx, train_idx = idx[:n_val], idx[n_val:]
+        # Train / validation split (era-based if possible, random fallback)
+        train_idx, val_idx = self._split_train_val(len(X_np), era_series)
 
         train_ds = TensorDataset(
             torch.as_tensor(X_np[train_idx], dtype=torch.float32),
@@ -197,6 +198,27 @@ class NumeraiNNBase:
     # ------------------------------------------------------------------
     # Helpers
     # ------------------------------------------------------------------
+
+    def _split_train_val(self, n: int, era_series=None):
+        """Split indices into train/val.  Uses era-based split when era info
+        is available (last eras as val) to respect the temporal structure of
+        Numerai data.  Falls back to random split otherwise."""
+        n_val = max(1, int(n * self._val_fraction))
+        if era_series is not None:
+            # Era-based split: use last eras as validation
+            eras = era_series.values
+            unique_eras = sorted(set(eras), key=lambda e: (int(e) if str(e).isdigit() else e))
+            n_val_eras = max(1, int(len(unique_eras) * self._val_fraction))
+            val_eras = set(unique_eras[-n_val_eras:])
+            val_mask = np.array([e in val_eras for e in eras])
+            val_idx = np.where(val_mask)[0]
+            train_idx = np.where(~val_mask)[0]
+            if len(val_idx) > 0 and len(train_idx) > 0:
+                return train_idx, val_idx
+        # Random fallback
+        rng = np.random.RandomState(self._seed)
+        idx = rng.permutation(n)
+        return idx[n_val:], idx[:n_val]
 
     def _prepare_data(self, X, y):
         X_np = self._to_numpy(X)

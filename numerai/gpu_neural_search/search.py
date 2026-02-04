@@ -345,14 +345,14 @@ CONFIG = {{
     }},
     'model': {{
         'type': '{model_type}',
-        'x_groups': ['features'],
+        'x_groups': ['features', 'era', 'benchmark_models'],
         'params': {repr(params)},
     }},
     'output': {{
         'output_dir': '{output_dir}',
         'results_name': 'best_nn_ender',
     }},
-    'preprocessing': {{'missing_value': 0.5, 'nan_missing_all_twos': False}},
+    'preprocessing': {{'missing_value': 2.0, 'nan_missing_all_twos': False}},
     'training': {{
         'cv': {{
             'embargo': 13,

@@ -7,12 +7,13 @@ CONFIG = {
         'embargo_eras': 13,
         'era_col': 'era',
         'feature_set': 'medium',
-        'target_col': 'target_ender_v4_20',
+        'target_col': 'target',
         'full_data_path': 'v5.2/downsampled_full.parquet',
+        'benchmark_data_path': 'v5.2/downsampled_full_benchmark_models.parquet',
     },
     'model': {
         'type': 'NumeraiResNet',
-        'x_groups': ['features'],
+        'x_groups': ['features', 'era', 'benchmark_models'],
         'params': {
             'hidden_dim': 256,
             'n_blocks': 4,
