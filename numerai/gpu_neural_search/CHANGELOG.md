@@ -7,6 +7,74 @@ Numerai example-scripts リポジトリに、RTX 5070 Ti (16GB VRAM) 向け GPU 
 
 ---
 
+## コミット 3 — 最新モデル追加 (TabM + RealMLP)
+
+### 新規ファイル
+
+| ファイル | 内容 |
+|----------|------|
+| `agents/code/modeling/models/nn_tabm.py` | **TabM** (ICLR 2025): BatchEnsemble MLP。k個のMLPを1モデル内で重み共有しながら並列学習 |
+| `agents/code/modeling/models/nn_realmlp.py` | **RealMLP** (NeurIPS 2024): Bag-of-tricks MLP。Robust Scaling, Smooth Clipping, Neural Tangent Parametrization |
+| `agents/baselines/configs/tabm_ender_baseline.py` | TabM ベースライン設定 |
+| `agents/baselines/configs/realmlp_ender_baseline.py` | RealMLP ベースライン設定 |
+
+### 変更ファイル
+
+| ファイル | 変更内容 |
+|----------|----------|
+| `agents/code/modeling/utils/model_factory.py` | `NumeraiTabM`, `NumeraiRealMLP` を登録 (計6モデル対応) |
+| `agents/code/modeling/models/nn_base.py` | `_compute_loss()` フックを追加 (TabMのアンサンブルロス対応) |
+| `gpu_neural_search/search.py` | TabM, RealMLP の探索空間追加 (計5アーキテクチャ探索) |
+
+### TabM アーキテクチャ詳細
+
+```
+BatchEnsemble MLP:
+- 入力 → [k個の多様化 (scaling vectors)] → 共有Linear → 活性化 → ... → k個の予測
+- 学習時: 各メンバーの loss を平均化 (mean loss)
+- 推論時: k個の予測を平均化 (average prediction)
+
+探索空間:
+  k (ensemble size): 8, 16, 32, 64
+  n_blocks: 2-5
+  d_block: 128, 256, 512
+  scaling_init: normal, random-signs
+```
+
+### RealMLP アーキテクチャ詳細
+
+```
+Bag-of-tricks MLP:
+1. Robust Scaling: median + IQR ベースの前処理 (外れ値に頑健)
+2. Smooth Clipping: x / (1 + |x/c|) * c で入力値を制限
+3. Neural Tangent Parametrization: W * 1/sqrt(fan_in) スケーリング
+4. SELU 活性化 (自己正規化、dropout不要)
+5. 3層×256ユニット (論文推奨デフォルト)
+```
+
+### nn_base.py の変更
+
+```python
+# Before: MSELoss を直接使用
+criterion = nn.MSELoss()
+loss = criterion(pred, yb)
+
+# After: _compute_loss() フック経由
+loss = self._compute_loss(pred, yb)
+
+# base class のデフォルト実装
+def _compute_loss(self, pred, target):
+    pred = pred.squeeze(-1)
+    return F.mse_loss(pred, target)
+
+# TabM のオーバーライド (アンサンブルロス)
+def _compute_loss(self, pred, target):
+    target_expanded = target.unsqueeze(1).expand_as(pred)
+    return F.mse_loss(pred, target_expanded)
+```
+
+---
+
 ## コミット 1: `67ff3ec` — 初期実装
 
 ### 新規ファイル (15件)

@@ -104,10 +104,53 @@ def _suggest_ft_transformer(trial: optuna.Trial, quick: bool = False) -> dict:
     }
 
 
+def _suggest_tabm(trial: optuna.Trial, quick: bool = False) -> dict:
+    return {
+        "model_type": "NumeraiTabM",
+        "params": {
+            "k": trial.suggest_categorical("tabm_k", [8, 16, 32, 64]),
+            "n_blocks": trial.suggest_int("tabm_n_blocks", 2, 5),
+            "d_block": trial.suggest_categorical("tabm_d_block", [128, 256, 512]),
+            "dropout": trial.suggest_float("tabm_dropout", 0.0, 0.3),
+            "activation": trial.suggest_categorical("tabm_activation", ["silu", "gelu", "mish"]),
+            "scaling_init": trial.suggest_categorical("tabm_scaling_init", ["normal", "random-signs"]),
+            "learning_rate": trial.suggest_float("tabm_lr", 1e-4, 1e-2, log=True),
+            "batch_size": trial.suggest_categorical("tabm_batch_size", [2048, 4096, 8192]),
+            "weight_decay": trial.suggest_float("tabm_wd", 1e-6, 1e-3, log=True),
+            "epochs": 30 if quick else trial.suggest_int("tabm_epochs", 50, 150),
+            "patience": 5 if quick else 10,
+            "mixed_precision": True,
+        },
+    }
+
+
+def _suggest_realmlp(trial: optuna.Trial, quick: bool = False) -> dict:
+    return {
+        "model_type": "NumeraiRealMLP",
+        "params": {
+            "hidden_dims": [256, 256, 256],  # Fixed per paper recommendation
+            "activation": trial.suggest_categorical("realmlp_activation", ["selu", "mish"]),
+            "dropout": trial.suggest_float("realmlp_dropout", 0.0, 0.15),
+            "use_ntp": trial.suggest_categorical("realmlp_ntp", [True, False]),
+            "use_smooth_clip": trial.suggest_categorical("realmlp_smooth_clip", [True, False]),
+            "clip_value": trial.suggest_float("realmlp_clip", 2.0, 5.0),
+            "use_robust_scaling": trial.suggest_categorical("realmlp_robust_scale", [True, False]),
+            "learning_rate": trial.suggest_float("realmlp_lr", 1e-4, 5e-3, log=True),
+            "batch_size": trial.suggest_categorical("realmlp_batch_size", [2048, 4096, 8192]),
+            "weight_decay": trial.suggest_float("realmlp_wd", 1e-6, 1e-3, log=True),
+            "epochs": 30 if quick else trial.suggest_int("realmlp_epochs", 50, 150),
+            "patience": 5 if quick else 10,
+            "mixed_precision": True,
+        },
+    }
+
+
 _ARCH_SUGGESTERS = {
     "MLP": _suggest_mlp,
     "ResNet": _suggest_resnet,
     "FTTransformer": _suggest_ft_transformer,
+    "TabM": _suggest_tabm,
+    "RealMLP": _suggest_realmlp,
 }
 
 
@@ -142,6 +185,12 @@ def _create_objective(
         elif model_type == "NumeraiFTTransformer":
             from agents.code.modeling.models.nn_ft_transformer import NumeraiFTTransformer
             model = NumeraiFTTransformer(feature_cols=features, **params)
+        elif model_type == "NumeraiTabM":
+            from agents.code.modeling.models.nn_tabm import NumeraiTabM
+            model = NumeraiTabM(feature_cols=features, **params)
+        elif model_type == "NumeraiRealMLP":
+            from agents.code.modeling.models.nn_realmlp import NumeraiRealMLP
+            model = NumeraiRealMLP(feature_cols=features, **params)
         else:
             raise ValueError(f"Unknown model type: {model_type}")
 

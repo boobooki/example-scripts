@@ -106,7 +106,6 @@ class NumeraiNNBase:
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             optimizer, T_max=self._epochs, eta_min=self._lr * 0.01
         )
-        criterion = nn.MSELoss()
         scaler = torch.amp.GradScaler("cuda", enabled=self._mixed_precision and self._device.type == "cuda")
 
         # Training loop with early stopping
@@ -123,8 +122,8 @@ class NumeraiNNBase:
                 xb, yb = xb.to(self._device, non_blocking=True), yb.to(self._device, non_blocking=True)
                 optimizer.zero_grad(set_to_none=True)
                 with torch.amp.autocast("cuda", enabled=self._mixed_precision and self._device.type == "cuda"):
-                    pred = self._network(xb).squeeze(-1)
-                    loss = criterion(pred, yb)
+                    pred = self._network(xb)
+                    loss = self._compute_loss(pred, yb)
                 scaler.scale(loss).backward()
                 scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_(self._network.parameters(), 1.0)
@@ -144,8 +143,8 @@ class NumeraiNNBase:
                 for xb, yb in val_dl:
                     xb, yb = xb.to(self._device, non_blocking=True), yb.to(self._device, non_blocking=True)
                     with torch.amp.autocast("cuda", enabled=self._mixed_precision and self._device.type == "cuda"):
-                        pred = self._network(xb).squeeze(-1)
-                        loss = criterion(pred, yb)
+                        pred = self._network(xb)
+                        loss = self._compute_loss(pred, yb)
                     val_loss += loss.item()
                     n_val_batches += 1
 
@@ -194,6 +193,11 @@ class NumeraiNNBase:
 
     def _build_network(self, n_features: int) -> nn.Module:
         raise NotImplementedError("Subclasses must implement _build_network()")
+
+    def _compute_loss(self, pred: torch.Tensor, target: torch.Tensor) -> torch.Tensor:
+        """Compute loss. Override for ensemble models like TabM."""
+        pred = pred.squeeze(-1)  # (batch,) for standard models
+        return nn.functional.mse_loss(pred, target)
 
     # ------------------------------------------------------------------
     # Helpers

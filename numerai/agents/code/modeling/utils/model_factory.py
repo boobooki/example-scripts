@@ -20,10 +20,17 @@ def build_model(
     elif model_type == "NumeraiFTTransformer":
         from agents.code.modeling.models.nn_ft_transformer import NumeraiFTTransformer
         model = NumeraiFTTransformer(feature_cols=feature_cols, **model_params)
+    elif model_type == "NumeraiTabM":
+        from agents.code.modeling.models.nn_tabm import NumeraiTabM
+        model = NumeraiTabM(feature_cols=feature_cols, **model_params)
+    elif model_type == "NumeraiRealMLP":
+        from agents.code.modeling.models.nn_realmlp import NumeraiRealMLP
+        model = NumeraiRealMLP(feature_cols=feature_cols, **model_params)
     else:
         raise ValueError(
             "Unsupported model type: "
-            f"{model_type}. Supported types: LGBMRegressor, NumeraiMLP, NumeraiResNet, NumeraiFTTransformer"
+            f"{model_type}. Supported types: LGBMRegressor, NumeraiMLP, NumeraiResNet, "
+            "NumeraiFTTransformer, NumeraiTabM, NumeraiRealMLP"
         )
 
     target_transform = model_config.get("target_transform")
